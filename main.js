@@ -118,11 +118,6 @@ const moveOnScroll = (e) => {
     scrollTop * 0.004,
     scrollTop * -0.004,
     10 + scrollTop * 0.01
-
-    // // To the center
-    // 22.192 - scrollTop * 0.004,
-    // -22.192 - scrollTop * -0.004,
-    // 65.5 - scrollTop * 0.01
   );
   controls.update();
 };
