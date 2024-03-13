@@ -9,7 +9,6 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   300
 );
-// camera.position.set(22.192, -22.192, 65.5);
 camera.position.set(0, 0, 10);
 
 const renderer = new THREE.WebGLRenderer();
@@ -50,7 +49,7 @@ const avatarCube = new THREE.Mesh(
   new THREE.MeshBasicMaterial({ map: avatarTexture })
 );
 avatarCube.position.set(3, 0, 0);
-let avatarCubeMove = 0.003; // move speed for ip and down movement of an avatarCube
+let avatarCubeMove = 0.003; // move speed for up and down movement of an avatarCube
 
 scene.add(avatarCube);
 
@@ -87,7 +86,7 @@ const addStar = () => {
 
   const [x, y, z] = Array(3)
     .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(100));
+    .map(() => THREE.MathUtils.randFloatSpread(150));
   sphere.position.set(x, y, z);
 
   scene.add(sphere);
@@ -95,19 +94,14 @@ const addStar = () => {
 
 Array(200).fill().forEach(addStar);
 
-const loader = new THREE.CubeTextureLoader();
+// SkyBox
+const loader = new THREE.TextureLoader();
 loader.setPath(texturesPath);
-
-const textureCube = loader.load([
-  "skyboxRight.jpg",
-  "skyboxLeft.jpg",
-  "skyboxUp.jpg",
-  "skyboxDown.jpg",
-  "skyboxBack.jpg",
-  "skyboxFront.jpg",
-]);
-
-scene.background = textureCube;
+const texture = loader.load("skyBox.jpg", () => {
+  texture.mapping = THREE.EquirectangularReflectionMapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  scene.background = texture;
+});
 
 // Scroll handling
 const moveOnScroll = (e) => {
